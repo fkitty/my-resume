@@ -1,11 +1,20 @@
 body{
-    background-color: #000;
-    color: #fff;
+    background-color: #efefef;
     margin: 0;
 }
 a{
     color: inherit;/*继承父级的颜色，inherit：继承*/
     text-decoration: none;
+}
+*{
+    margin: 0;
+    padding: 0;
+}
+/* 重写hr */
+hr{
+    height: 0;
+    border: none;
+    border-top: 1px solid #dedede;
 }
 .clearfix::after{
     content: '';
@@ -14,31 +23,44 @@ a{
 }
 
 .topBarNav{
-    padding:20px 16px 20px 16px;
+    padding:20px 0px 20px 0px;
+    position: fixed;/*脱离文档流,body的高度就不会包含topBarNav,直接从banner开始算*/
+    top: 0;
+    left: 0;
+    width:100%;/*解决脱离文档流后宽度往内缩的现象*/
+    /* 解决加了width100%后，topBarNav的宽度比body还要宽的问题 */
+    /*多的是它左右的padding
+    1.将左右padding 为0
+    2.在html中加一个div把a和nav包起来
+    3.把padding加在新添加的这个div上
+    4.注意这时候浮动父元素的cleatfix类加在这个新的div上，他们的父元素已经不是topBarNav了*/
 }
-.topBarNav > a{
+.topBarNav-inner{
+    padding: 0 16px;
+}
+.topBarNav  a{
     float: left;
 }
 
-.topBarNav > nav{
+.topBarNav  nav{
     float: right;
     padding-top: 7px;
 }
 
 /* >右边的必须是左边的儿子 */
-.topBarNav > nav > ul{
+.topBarNav  nav > ul{
     list-style: none;
     /* border: 1px solid red; */
     margin: 0;
     padding: 0;
 }
-.topBarNav > nav >ul > li{
+.topBarNav  nav ul > li{
     float: left;
     margin-left: 17px;
     margin-right: 17px;
     /* border: 1px solid green; */
 }
-.topBarNav > nav >ul > li > a{
+.topBarNav  nav > ul > li > a{
     font-size: 12px;
     /* color: #B7B7B7; */
     /* text-decoration: none; */
@@ -52,7 +74,7 @@ a{
     display: block;
     color:#b7b7b1;
 }
-.topBarNav > nav >ul > li > a:hover{
+.topBarNav  nav > ul > li > a:hover{
     border-bottom: 3px solid#E8676B;
 }
 .topBarNav .logo{
@@ -68,4 +90,125 @@ a{
 
 .topBarNav .logo .card{
     color: #9A9DA2;
+}
+.banner{
+    background-image: url(../img/rs-cover.jpg);
+    /* 使背景图片水平竖直方向上居中 */
+    background-position: center center;
+    /* border:1px solid pink; */
+    
+    /* 使背景图片自适应 */
+    background-size: cover;
+    height: 515px;/*一个div的高度，是由他文档流中的元素的高度决定的。所以一般不要给他一个确定的高度，不然会引起很多的bug*/
+}
+.banner .mask{
+    height: 515px;
+    background-color: rgba(0, 0, 0, 0.8)
+}
+.userCard{
+    /* border: 1px solid red; */
+    /* 如果屏幕小于940它会自适应，只写宽度就没有自适应了 */
+    max-width: 940px;
+    /* 如果是一个div,且有宽度，让它居中的方法 */
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #fff;
+    /* padding加在userCard上，userCard会变胖，所以加在pictureAndText上 */
+    /* padding: 50px; */
+}
+
+.userCard .pictureAndText{
+    padding: 50px;
+}
+.userCard .welcome{
+    background: #E8676B;
+    color: #fff;
+    display: inline-block;
+    /* 尽量不要使用定义宽高的方法，需求一变的时候bug很多 */
+    /*width: 70px;
+    height: 29px;
+    line-height: 29px;
+    text-align: center;*/
+
+    /* 推荐的写法，好处是在span中可以随意的加减字
+       用padding来补全宽和高 */
+    padding:4.5px 15px;
+    line-height: 22px;
+    position: relative;
+    /* margin-bottom: 31px; */
+    /* welcome和h1没有合并的原因是welcome是inline-block */
+}
+
+.userCard .welcome .triangle{
+    border: 10px solid transparent;
+    display: block;
+    /* 一个div如果没有内容的话，它的高度就为0，如果没有宽度，就会自适应 */
+    width: 0;
+    border-left-color: #E6686A;
+    /* border-left-color: #000; */
+    border-top-width: 0;
+
+    /* 绝对定位：两部曲，子绝父相 */
+    position: absolute;
+    left: 4px;
+    top: 100%;/*让高度在hello那个span的正下方*/
+
+}
+.userCard .picture{
+    float: left;
+}
+.userCard .text{
+    float: left;
+    margin-left: 65px;
+    /* float元素默认会收缩,让横线变长，方法是给它加一个宽度 */
+    width: 470px;
+}
+.userCard .text h1{
+    margin-top: 18px;
+}
+.userCard .text hr{
+    margin: 20px 0;
+}
+.userCard .text dl dt,
+.userCard .text dl dd{
+    float: left;
+    /* 利用会自动换行的特性宽度为50%的时候，每行只有两个元素 */
+    /* width: 50%; */
+    padding: 8px 0;
+}
+.userCard .text dl dt{
+    width: 30%;
+    font-weight: bold;
+}
+.userCard .text dl dd{
+    width: 70%;
+    color: #9da0a7;/*不好测量的时候就看源码*/
+}
+.userCard > footer.media{
+    /* 不要给高度，先把里面的东西撑出来，再给padding */
+    /* height: 60px; */
+    background: #E8676B;
+    text-align:center;
+    /* padding: 20px 0; */
+}
+.userCard svg{
+    width: 30px;
+    height: 30px;
+    fill: white;
+    /* margin: 0 30px; */
+    /* 解决图标的上下不一样多的现象 */
+    vertical-align: top;
+}
+.userCard > footer.media > a{
+    /* border: 1px solid black; */
+    border-radius: 50%;
+    width: 40px;
+    /* height: 40px; */
+    padding: 5px 0;
+    display: inline-block;
+    line-height: 30px;
+    margin: 16px 16px;
+}
+.userCard > footer.media > a:hover{
+    background: #d05c60;
 }
