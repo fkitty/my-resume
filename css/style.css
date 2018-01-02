@@ -10,6 +10,12 @@ a{
     margin: 0;
     padding: 0;
 }
+ol li{
+    list-style: none;
+}
+h1,h2,h3,h4,h5,h6{
+    font-weight: normal;
+}
 /* 重写hr */
 hr{
     height: 0;
@@ -112,9 +118,11 @@ hr{
     /* 如果是一个div,且有宽度，让它居中的方法 */
     margin-left: auto;
     margin-right: auto;
+
     background-color: #fff;
     /* padding加在userCard上，userCard会变胖，所以加在pictureAndText上 */
     /* padding: 50px; */
+    box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.5);
 }
 
 .userCard .pictureAndText{
@@ -211,4 +219,160 @@ hr{
 }
 .userCard > footer.media > a:hover{
     background: #d05c60;
+}
+body > main{
+    margin-top: -350px;
+}
+
+/* 加在内联元素的父元素上，使内联元素居中 */
+body > main .downloadResume-wrapper{
+    text-align: center;
+}
+body > main .downloadResume{
+    font-size: 14px;
+    line-height: 16px;
+    padding: 21px 50px;
+    display: inline-block;
+    border:1px solid #CDCFD1;
+    border-radius: 2px;
+    background: #EFEFEF;
+    color:#3d4451;
+    font-weight: bold;
+    margin: 32px 0;
+    /* transition: box-shadow 0.5s; */
+}
+body > main .downloadResume:hover{
+    box-shadow: 0px 4px 13px 0px rgba(0,0,0,0.5);
+    /* 使鼠标附上去之后变化比较平滑，给他添加过渡效果，两个地方可以加 */
+    transition:box-shadow 0.3s;
+}
+main .selfIntroduction{
+    max-width: 940px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 20px;
+    line-height: 1.8;
+}
+/* class在标签里面的时候，标签和类名之间不用空格 */
+section.skills,
+section.portfolio{
+    margin-top: 60px;
+    max-width: 940px;
+    margin-left: auto;
+    margin-right: auto;
+    /* border: 1px solid red; */
+    height: 200px;
+}
+section.skills > h2,
+section.portfolio > h2{
+    text-align: center;
+    color: #3d4451;
+    font-size: 34px;
+    font-weight: 600;
+}
+section.skills > h3{
+    font-size: 14px;
+    line-height: 1.1;
+    padding-right: 40px;
+}
+section.skills > ol{
+    background: #fff;
+    box-shadow:0px 1px 5px 0px rgba(0,0,0,0.5);
+    padding: 20px 20px 0;
+    margin-top: 30px;
+}
+section.skills > ol > li{
+    float: left;
+    width:48%;/*不能加padding和margin了,一行显示两个*/
+    /* 方法一是在li的最里层再加一个div,把之前的h3和div包起来 
+       方法二是设置属性：box-sizing:border-box*/
+    /*这种方法是的中间是多了空隙，但最有边也多了
+      解决方法是把50%改为48%，给偶数的li右浮，奇数的左浮*/
+
+    box-sizing: border-box;/*50%是把border算在内的*/
+    padding-right: 30px;
+}
+/* 选中li中的子元素，even指的是偶数，odd是奇数 */
+section.skills > ol > li:nth-child(even){
+    float: right;
+    /* background: green; */
+}
+section.skills .progressBar{
+    height: 5px;
+    background: #fae1e1;
+    border-radius: 2px;
+    margin: 4px 0 30px;/*字和线条之间的间距,垂直线条之间的距离*/
+    /* border:1px solid #E6686A; */
+}
+section.skills .progressBar > .progress{
+    /* 当外面高度确定的时候，里面的高度可以直接写100%,
+    这样在调整外面宽度的时候对里面就没什么影响 */
+    height: 100%;
+    background: #e6686a;
+    width: 50%;
+}
+section.portfolio{
+    text-align: center;/*不需要居中左浮的东西，居中左浮东西的父元素*/
+    margin-bottom: 100px;
+}
+section.portfolio nav{
+    display: inline-block;/*使nav和导航下面的条一样宽*/
+    vertical-align: top;
+    margin-top: 25px;
+    margin-bottom: 10px;
+}
+
+section.portfolio nav > ol{
+    /* border: 1px solid green; */
+    margin:0 auto;/*没有宽度，不能用margin:0 auto 居中*/
+    display: inline-block;/*会自动收缩宽度*/
+    vertical-align: top;
+}
+
+section.portfolio nav > ol > li{
+    float: left;
+    margin-left: 50px;
+    cursor: pointer;/*将鼠标改为手型*/
+}
+/* 去掉导航最左边的空隙 nth-child(1)==first-child */
+section.portfolio nav > ol > li:nth-child(1){
+    margin-left: 0;
+}
+section.portfolio nav .bar{
+    /* border:1px solid red; */
+    height: 5px;
+    background: #fff;
+    margin-top: 10px;
+    border-radius: 3px;
+}
+section.portfolio > nav .bar-inner{
+    height: 100%;
+    background: #e6686a;
+    /* width:20%; */
+    border-radius: 3px;
+    transition:all 0.5s;/*加个过渡*/
+    /* margin-left: 100px; */
+}
+/* bar和state-1之间没有空格，表示同时符合 */
+section.portfolio nav .bar.state-1 .bar-inner{
+    width: 40px;;
+    margin-left: 0;
+}
+section.portfolio nav .bar.state-2 .bar-inner{
+    width: 40px;
+    margin-left: 81px;
+}
+section.portfolio nav .bar.state-3 .bar-inner{
+    width: 100px;
+    margin-left: 164px;
+}
+section.portfolio .works{
+    position: relative;
+    /*border: 1px solid red;*//*绝对定位的元素时=是不在文档流中的
+                             如果文档流中没有东西，这个div就不知道自己多高*/
+}
+section.portfolio .works > .big,
+section.portfolio .works > .small{
+    position: absolute;
 }
